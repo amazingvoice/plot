@@ -181,7 +181,7 @@ for i in range(2 * num_of_lanes, num_of_lanes, -1):
     SE.append("L" + str(i))
 
 SW = []
-for i in range(3 * num_of_lanes + 1, 4 * num_of_lanes):
+for i in range(3 * num_of_lanes + 1, 4 * num_of_lanes + 1):
     SW.append("R" + str(i))
 for i in range(3 * num_of_lanes, 2 * num_of_lanes, -1):
     SW.append("L" + str(i))
@@ -211,7 +211,7 @@ for i in range(1, num_of_lanes + 1):
             if "=" in res:
                 res = res.split(" = ")[1]  # res format: (x, y)
 
-            print("intersect point: " + res)  # PRINT DEBUG INFO
+            print(j + str(i) + k + ": " + res)  # PRINT DEBUG INFO
 
             if "undefined" in res:  # no collision point between these 2 paths
                 combination_map[j + str(i) + k] = "undefined"
@@ -421,16 +421,19 @@ for i in range(1, num_of_lanes + 1):
                     end2 = swap
 
                 collision_point[str(i) + "L" + j[1:] + j[0]] = [(start2, start), (end2, end)]
-                break
+            break
 
 # 1 - num_of_lanes (R)
 for i in range(1, num_of_lanes + 1):
     for j in reversed(SE):
 
-        temp = combination_map["L" + str(i) + j]
+        temp = combination_map["R" + str(i) + j]
 
         # first near-miss path found
         if temp == "undefined":
+
+            print("first undefined: R" + str(i) + j)
+
             center_old = lane_info["R" + str(i)][1]
             center_new = (center_old[0] + safe_distance / math.sqrt(2.0),
                           center_old[1] - safe_distance / math.sqrt(2.0))
@@ -528,7 +531,7 @@ for i in range(1, num_of_lanes + 1):
                     end2 = swap
 
                 collision_point[str(i) + "R" + j[1:] + j[0]] = [(start2, start), (end2, end)]
-                break
+            break
 # =======================================================================================
 
 f = open("collision_point.txt", "a")
