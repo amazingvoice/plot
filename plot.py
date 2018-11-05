@@ -459,6 +459,8 @@ for i in range(1, num_of_lanes + 1):
             res = driver.find_element_by_xpath("(//div[@class='gwt-HTML'])[last()]").text
 
             if "=" in res:  # there are 2 intersection points
+                print("res: " + res)
+                print("Moved path have 2 intersections.")
                 temp = res.split(" = ")[1]
                 temp = temp.split(",")
 
